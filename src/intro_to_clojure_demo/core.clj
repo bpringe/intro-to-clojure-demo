@@ -3,7 +3,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;; pmap ;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;; Parallelism with pmap ;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; A function that simulates a long-running process by calling Thread/sleep:
@@ -26,7 +26,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (->> (range 4)
-     (map #'long-running-job)
+     (map long-running-job)
      doall
      time)
 
@@ -37,3 +37,12 @@
 ;;;;;;;;;;;;;;;;;; Re-defining code ;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn print-number-and-wait
+  [i]
+  (println i ".............")
+  (Thread/sleep 1000))
+
+(future
+  (run!
+   #'print-number-and-wait ;; mind the #' - the expression evaluates to the #'print-number-and-wait Var, not its value.
+   (range)))
