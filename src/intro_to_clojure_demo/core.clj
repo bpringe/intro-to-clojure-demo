@@ -1,6 +1,7 @@
 (ns intro-to-clojure-demo.core)
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; Parallelism with pmap ;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -12,10 +13,12 @@
 
 ;; Use `doall` to eagerly evaluate `map`, which evaluates lazily by default.
 ;; With `map`, the total elapsed time is ~ 4 * 3 seconds:
-(time (doall (map long-running-job (range 4))))
+
+;(time (doall (map long-running-job (range 4))))
 
 ;; With `pmap`, the total elapsed time is just over 3 seconds:
-(time (doall (pmap long-running-job (range 4))))
+
+;(time (doall (pmap long-running-job (range 4))))
 
 
 
@@ -23,15 +26,15 @@
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;; Threading macros ;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ;;;;;;;;;;;;;;;;;; Threading macros ;;;;;;;;;;;;;;;;;;;
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Thread-last
-(->> (range 4)
-     (pmap long-running-job)
-     doall
-     time)
+; (->> (range 4)
+;      (pmap long-running-job)
+;      doall
+;      time)
 
 
 
@@ -51,13 +54,13 @@
                         :state "Louisiana"
                         :zip 70809}}})
 
+(->> person :employer :address :city)
+
+
+
+
+
 ;; Thread-first
-(-> person :employer :address :city)
-
-
-
-
-
 (-> 5 (+ 3) (/ 2) (- 1))
 
 (macroexpand '(-> c (+ 3) (- 2) (- 1)))
@@ -77,12 +80,10 @@
 
 (defn print-and-wait
   [x]
-  (throw (Exception. "done"))
-  (println x "!!!")
+  (println x "...")
   (Thread/sleep 1000))
 
-(future
-  (run!
-   #'print-and-wait
-   (range)))
-
+; (future
+;   (run!
+;    #'print-and-wait
+;    (range)))
