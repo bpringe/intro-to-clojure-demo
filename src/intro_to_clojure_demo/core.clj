@@ -2,6 +2,8 @@
 
 
 
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; Parallelism with pmap ;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -18,7 +20,7 @@
 
 ;; With `pmap`, the total elapsed time is just over 3 seconds:
 
-;(time (doall (pmap long-running-job (range 4))))
+;(time (doall (pmap long-running-job (range 50))))
 
 
 
@@ -32,7 +34,7 @@
 
 ;; Thread-last
 ; (->> (range 4)
-;      (pmap long-running-job)
+;      (pmap long-running-job )
 ;      doall
 ;      time)
 
@@ -55,6 +57,7 @@
                         :zip 70809}}})
 
 (->> person :employer :address :city)
+
 
 
 
